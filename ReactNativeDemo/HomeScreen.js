@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Dimensions, StyleSheet, Text, View } from 'react-native';
+import { Button, Image, Dimensions, StyleSheet, Text, View } from 'react-native';
 import MapView, { UrlTile } from "react-native-maps";
 
 export default class HomeScreen extends React.Component {
@@ -27,6 +27,7 @@ export default class HomeScreen extends React.Component {
     };
 
     this.onRegionChangeComplete = this.onRegionChangeComplete.bind(this);
+    this.openTakePicture = this.openTakePicture.bind(this);
   }
 
   onRegionChangeComplete(region) {
@@ -34,6 +35,12 @@ export default class HomeScreen extends React.Component {
 
     this.setState({ latitude: region.latitude });
     this.setState({ longitude: region.longitude });
+  }
+
+  openTakePicture() {
+
+    const {navigate} = this.props.navigation;
+    navigate('TakePicture');
   }
 
   render() {
@@ -79,6 +86,10 @@ export default class HomeScreen extends React.Component {
             source={require('./assets/pin.png')}
           />
         </View>
+        <Button
+          onPress={this.openTakePicture}
+          title="Take picture"
+        />
       </View>
     );
   }
