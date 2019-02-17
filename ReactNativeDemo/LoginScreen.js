@@ -3,6 +3,10 @@ import { StyleSheet, Alert, Button, TextInput, Text, View } from 'react-native';
 
 export default class LoginScreen extends React.Component {
 
+  static navigationOptions = {
+    title: "Login page"
+  };
+
   constructor(props) {
       super(props);
 
@@ -36,7 +40,7 @@ export default class LoginScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>TMC</Text>
+        <Text>ReactNative Demonstration app</Text>
         <TextInput
           style={{ height: 40 }}
           placeholder="Email"

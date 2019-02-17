@@ -3,6 +3,10 @@ import { Text, View } from 'react-native';
 
 export default class HomeScreen extends React.Component {
 
+  static navigationOptions = {
+    title: "Home page"
+  };
+
   constructor(props) {
     super(props);
 
