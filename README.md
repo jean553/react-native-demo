@@ -21,3 +21,9 @@ Into the project directory:
 ```sh
 npm start
 ```
+
+## Install some requirements
+
+```sh
+npm install --save react-native-navigation
+```
