@@ -26,4 +26,5 @@ npm start
 
 ```sh
 npm install --save react-native-navigation
+npm install react-native-maps --save
 ```
