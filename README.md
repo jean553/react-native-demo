@@ -27,4 +27,6 @@ npm start
 ```sh
 npm install --save react-native-navigation
 npm install react-native-maps --save
+npm install react-native-camera --save
+react-native link react-native-camera
 ```

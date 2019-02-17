@@ -20,7 +20,7 @@ export default class LoginScreen extends React.Component {
 
   login() {
 
-    fetch('https://dev.tell-my-city.com/token', {
+    fetch('https://YOUR_API/token', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
