@@ -20,7 +20,7 @@ export default class LoginScreen extends React.Component {
 
   login() {
 
-    fetch('https://dev.tell-my-city.com/token', {
+    fetch('https://YOUR_API/token', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -33,14 +33,14 @@ export default class LoginScreen extends React.Component {
     })
       .then(response => {
 
-        //if (response.status !== 200) {
-        //  Alert.alert(
-        //    'Cannot login',
-        //    'Error during authentication.'
-        //  );
+        if (response.status !== 200) {
+          Alert.alert(
+            'Cannot login',
+            'Error during authentication.'
+          );
 
-        //  return;
-        //}
+          return;
+        }
 
         const {navigate} = this.props.navigation;
         navigate('Home');
