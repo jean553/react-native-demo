@@ -32,6 +32,16 @@ export default class LoginScreen extends React.Component {
       }),
     })
       .then(response => {
+
+        if (response.status !== 200) {
+          Alert.alert(
+            'Cannot login',
+            'Error during authentication.'
+          );
+
+          return;
+        }
+
         const {navigate} = this.props.navigation;
         navigate('Home');
       });
