@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Alert, Button, TextInput, Text, View } from 'react-native';
+import { StyleSheet, Alert, Button, TextInput, Text, View, Image } from 'react-native';
 
 export default class LoginScreen extends React.Component {
 
@@ -51,13 +51,17 @@ export default class LoginScreen extends React.Component {
     return (
       <View style={styles.container}>
         <Text>ReactNative Demonstration app</Text>
+        <Image
+          style={styles.image}
+          source={require('./assets/react.png')}
+        />
         <TextInput
-          style={{ height: 40 }}
+          style={styles.textInput}
           placeholder="Email"
           onChangeText={email => this.setState({email})}
         />
         <TextInput
-          style={{ height: 40 }}
+          style={styles.textInput}
           placeholder="Password"
           secureTextEntry={true}
           onChangeText={password => this.setState({password})}
@@ -78,4 +82,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  textInput: {
+    borderLeftWidth: 1,
+    borderRightWidth: 1,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    height: 40,
+    width: 200
+  },
+  image: {
+    width: 100,
+    height: 100
+  }
 });
