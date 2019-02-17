@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import { Image, Dimensions, StyleSheet, Text, View } from 'react-native';
 import MapView, { UrlTile } from "react-native-maps";
 
 export default class HomeScreen extends React.Component {
@@ -19,7 +19,8 @@ export default class HomeScreen extends React.Component {
         longitude: 2.33,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421
-      }
+      },
+      markerImage: './assets/pin.png'
     };
   }
 
@@ -50,6 +51,16 @@ export default class HomeScreen extends React.Component {
           onRegionChange={this.onRegionChange}
         >
         </MapView>
+        <View
+          pointerEvents="none"
+          style={styles.pinView}
+        >
+          <Image
+            style={styles.pin}
+            pointerEvents="none"
+            source={require('./assets/pin.png')}
+          />
+        </View>
       </View>
     );
   }
@@ -69,5 +80,19 @@ const styles = StyleSheet.create({
     flex: 1,
     width,
     height
+  },
+  pinView: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'transparent'
+  },
+  pin: {
+    width: 50,
+    height: 50
   }
 });
