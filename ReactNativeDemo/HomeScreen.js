@@ -1,5 +1,6 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import MapView, { UrlTile } from "react-native-maps";
 
 export default class HomeScreen extends React.Component {
 
@@ -12,8 +13,17 @@ export default class HomeScreen extends React.Component {
 
     this.state = {
       latitude: '',
-      longitude: ''
+      longitude: '',
+      region: {
+        latitude: 48.86,
+        longitude: 2.33,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421
+      }
     };
+  }
+
+  onRegionChange(region) {
   }
 
   render() {
@@ -32,9 +42,32 @@ export default class HomeScreen extends React.Component {
     );
 
     return (
-      <View>
+      <View style={styles.container}>
         <Text>Home page ( {this.state.latitude}, {this.state.longitude} )</Text>
+        <MapView
+          style={styles.map}
+          region={this.state.region}
+          onRegionChange={this.onRegionChange}
+        >
+        </MapView>
       </View>
     );
   }
 }
+
+const width = Dimensions.get('window').width
+const height = Dimensions.get('window').height
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    width,
+    height: 50,
+    alignItems: 'center',
+  },
+  map: {
+    flex: 1,
+    width,
+    height
+  }
+});
