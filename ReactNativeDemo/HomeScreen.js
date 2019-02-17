@@ -12,6 +12,8 @@ export default class HomeScreen extends React.Component {
     super(props);
 
     this.state = {
+      defaultLatitude: '',
+      defaultLongitude: '',
       latitude: '',
       longitude: '',
       region: {
@@ -22,20 +24,26 @@ export default class HomeScreen extends React.Component {
       },
       markerImage: './assets/pin.png'
     };
+
+    this.onRegionChangeComplete = this.onRegionChangeComplete.bind(this);
   }
 
-  onRegionChange(region) {
+  onRegionChangeComplete(region) {
+    this.setState({ region });
+
+    this.setState({ latitude: region.latitude });
+    this.setState({ longitude: region.longitude });
   }
 
   render() {
  
     navigator.geolocation.getCurrentPosition(
       position => {
-        const latitude = position.coords.latitude;
-        const longitude = position.coords.longitude;
+        const defaultLatitude = position.coords.latitude;
+        const defaultLongitude = position.coords.longitude;
 
-        this.setState({latitude});
-        this.setState({longitude});
+        this.setState({ defaultLatitude });
+        this.setState({ defaultLongitude });
       },
       error => {
         console.log('error geoloc');
@@ -44,11 +52,12 @@ export default class HomeScreen extends React.Component {
 
     return (
       <View style={styles.container}>
-        <Text>Home page ( {this.state.latitude}, {this.state.longitude} )</Text>
+        <Text>Default position: {this.state.defaultLatitude}, {this.state.defaultLongitude}</Text>
+        <Text>Current position: {this.state.latitude}, {this.state.longitude}</Text>
         <MapView
           style={styles.map}
-          region={this.state.region}
-          onRegionChange={this.onRegionChange}
+          initialRegion={this.state.region}
+          onRegionChangeComplete={this.onRegionChangeComplete}
         >
         </MapView>
         <View
