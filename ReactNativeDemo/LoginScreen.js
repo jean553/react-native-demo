@@ -24,11 +24,20 @@ export default class LoginScreen extends React.Component {
       };
 
       this.login = this.login.bind(this);
+      this.displayAuthError = this.displayAuthError.bind(this);
+  }
+
+  displayAuthError() {
+
+      Alert.alert(
+          'Cannot login',
+          'Error during authentication.'
+      );
   }
 
   login() {
 
-      fetch('https://YOUR_API/token', {
+      fetch('https://URL/token', {
           method: 'POST',
           headers: {
               Accept: 'application/json',
@@ -42,16 +51,16 @@ export default class LoginScreen extends React.Component {
       .then(response => {
 
           if (response.status !== 200) {
-              Alert.alert(
-                  'Cannot login',
-                  'Error during authentication.'
-              );
 
+              this.displayAuthError();
               return;
           }
 
           const {navigate} = this.props.navigation;
           navigate('Home');
+      })
+      .catch(() => {
+          this.displayAuthError();
       });
   }
 
