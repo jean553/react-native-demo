@@ -26,6 +26,10 @@ Vagrant.configure(2) do |config|
 
   config.vm.provision "set_lan_ip", "type": "shell" do |installs|
     installs.inline = "
+      
+      cd /vagrant/ReactNativeDemo
+      npm install
+
       echo 'export REACT_NATIVE_PACKAGER_HOSTNAME=#{REACT_NATIVE_PACKAGER_HOSTNAME}' >> /home/vagrant/.zshrc
       echo 'cd /vagrant' >> /home/vagrant/.zshrc
     "

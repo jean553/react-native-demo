@@ -21,70 +21,83 @@ export default class HomeScreen extends React.Component {
         super(props);
 
         this.state = {
-            region: {
-                latitude: '',
-                longitude: '',
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421
+            initialRegion: {
+                latitude: 0,
+                longitude: 0,
+                latitudeDelta: 0,
+                longitudeDelta: 0
             },
-            defaultRegion: {
-                latitude: '',
-                longitude: '',
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421
-            }
+            currentRegion: {
+                latitude: 0,
+                longitude: 0,
+                latitudeDelta: 0,
+                longitudeDelta: 0
+            },
+            displayMap: false
         };
 
         this.onRegionChangeComplete = this.onRegionChangeComplete.bind(this);
         this.openTakePicture = this.openTakePicture.bind(this);
+        this.setInitialRegion = this.setInitialRegion.bind(this);
+        this.renderMap = this.renderMap.bind(this);
+
+        navigator.geolocation.getCurrentPosition(
+	    this.setInitialRegion,
+            error => {}
+        );
+
     }
 
-    onRegionChangeComplete(region) {
-        this.setState({ region });
+    setInitialRegion(position) {
 
-        this.setState({ latitude: region.latitude });
-        this.setState({ longitude: region.longitude });
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+
+        const initialRegion = {
+            latitude: latitude,
+            longitude: longitude,
+            latitudeDelta: 0,
+            longitudeDelta: 0
+        };
+
+        this.setState({ initialRegion });
+
+        this.setState({ displayMap: true });
+    }
+
+    onRegionChangeComplete(currentRegion) {
+        this.setState({ currentRegion });
     }
 
     openTakePicture() {
-
         const {navigate} = this.props.navigation;
         navigate('TakePicture');
     }
 
-    render() {
-   
-        navigator.geolocation.getCurrentPosition(
-            position => {
-                const defaultLatitude = position.coords.latitude;
-                const defaultLongitude = position.coords.longitude;
+    renderMap() {
 
-                this.setState({ defaultLatitude });
-                this.setState({ defaultLongitude });
-
-                const defaultRegion = {
-                    latitude: defaultLatitude,
-                    longitude: defaultLongitude,
-                    latitudeDelta: 0.0922,
-                    longitudeDelta: 0.0421
-                };
-
-                this.setState({ defaultRegion });
-            },
-            error => {}
-        );
+        if (this.state.displayMap === false) {
+            return null;
+        }
 
         return (
+            <MapView
+                style={styles.map}
+                initialRegion={this.state.initialRegion}
+                onRegionChangeComplete={this.onRegionChangeComplete}
+                showsMyLocationButton={true}
+            >
+            </MapView>
+        );
+    }
+
+    render() {
+   
+        return (
             <View style={styles.container}>
-                <Text>Default position: {this.state.defaultRegion.latitude}, {this.state.defaultRegion.longitude}</Text>
-                <Text>Current position: {this.state.region.latitude}, {this.state.region.longitude}</Text>
-                <MapView
-                    style={styles.map}
-                    initialRegion={this.state.defaultRegion}
-                    onRegionChangeComplete={this.onRegionChangeComplete}
-                    showsMyLocationButton={true}
-                >
-                </MapView>
+                <Text>Initial position: {this.state.initialRegion.latitude}, {this.state.initialRegion.longitude}</Text>
+                <Text>Current position: {this.state.currentRegion.latitude}, {this.state.currentRegion.longitude}</Text>
+                { this.renderMap() }
                 <View
                     pointerEvents="none"
                     style={styles.pinView}
