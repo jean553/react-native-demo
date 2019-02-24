@@ -25,6 +25,7 @@ npm start
 ## Install some requirements
 
 ```sh
+npm install expo
 npm install --save react-native-navigation
 npm install react-native-maps --save
 npm install react-native-camera --save
