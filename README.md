@@ -2,6 +2,12 @@
 
 A simple React Native demonstration project.
 
+![Image 1](screenshots/1.png)
+![Image 2](screenshots/2.png)
+![Image 3](screenshots/3.png)
+![Image 4](screenshots/4.png)
+![Image 5](screenshots/5.png)
+
 ## Start the project
 
 ```sh
