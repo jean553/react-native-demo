@@ -11,58 +11,58 @@ import {
 
 export default class LoginScreen extends React.Component {
 
-  static navigationOptions = {
-      title: "Login page"
-  };
+    static navigationOptions = {
+        title: "Login page"
+    };
 
-  constructor(props) {
-      super(props);
+    constructor(props) {
+        super(props);
 
-      this.state = {
-          email: '',
-          password: ''
-      };
+        this.state = {
+            email: '',
+            password: ''
+        };
 
-      this.login = this.login.bind(this);
-      this.displayAuthError = this.displayAuthError.bind(this);
-  }
+        this.login = this.login.bind(this);
+        this.displayAuthError = this.displayAuthError.bind(this);
+    }
 
-  displayAuthError() {
+    displayAuthError() {
 
-      Alert.alert(
-          'Cannot login',
-          'Error during authentication.'
-      );
-  }
+        Alert.alert(
+            'Cannot login',
+            'Error during authentication.'
+        );
+    }
 
-  login() {
+    login() {
 
-      fetch('https://URL/token', {
-          method: 'POST',
-          headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-              username: this.state.email,
-              password: this.state.password
-          }),
-      })
-      .then(response => {
+        fetch('https://URL/token', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username: this.state.email,
+                password: this.state.password
+            }),
+        })
+        .then(response => {
 
-          if (response.status !== 200) {
+            if (response.status !== 200) {
 
-              this.displayAuthError();
-              return;
-          }
+                this.displayAuthError();
+                return;
+            }
 
-          const {navigate} = this.props.navigation;
-          navigate('Home');
-      })
-      .catch(() => {
-          this.displayAuthError();
-      });
-  }
+            const {navigate} = this.props.navigation;
+            navigate('Home');
+        })
+        .catch(() => {
+            this.displayAuthError();
+        });
+    }
 
     render() {
         return (
