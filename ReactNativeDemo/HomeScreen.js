@@ -6,7 +6,7 @@ import {
     Dimensions,
     StyleSheet,
     Text,
-    View 
+    View
 } from 'react-native';
 
 import MapView, { UrlTile } from "react-native-maps";
@@ -53,11 +53,14 @@ export default class HomeScreen extends React.Component {
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
 
+        const LATITUDE_DELTA = 0.0922;
+        const LONGITUDE_DELTA = 0.0421;
+
         const initialRegion = {
             latitude: latitude,
             longitude: longitude,
-            latitudeDelta: 0,
-            longitudeDelta: 0
+            latitudeDelta: LATITUDE_DELTA,
+            longitudeDelta: LONGITUDE_DELTA
         };
 
         this.setState({ initialRegion });
@@ -91,23 +94,34 @@ export default class HomeScreen extends React.Component {
         );
     }
 
+    renderPin() {
+
+        if (this.state.displayMap === false) {
+            return null;
+        }
+
+        return (
+            <View
+                pointerEvents="none"
+                style={styles.pinView}
+            >
+              <Image
+                  style={styles.pin}
+                  pointerEvents="none"
+                  source={require('./assets/pin.png')}
+              />
+            </View>
+        );
+    }
+
     render() {
-   
+
         return (
             <View style={styles.container}>
                 <Text>Initial position: {this.state.initialRegion.latitude}, {this.state.initialRegion.longitude}</Text>
                 <Text>Current position: {this.state.currentRegion.latitude}, {this.state.currentRegion.longitude}</Text>
                 { this.renderMap() }
-                <View
-                    pointerEvents="none"
-                    style={styles.pinView}
-                >
-                  <Image
-                      style={styles.pin}
-                      pointerEvents="none"
-                      source={require('./assets/pin.png')}
-                  />
-                </View>
+                { this.renderPin() }
                 <Button
                     onPress={this.openTakePicture}
                     title="Take picture"
