@@ -6,7 +6,8 @@ import {
     Dimensions,
     StyleSheet,
     Text,
-    View
+    View,
+    ActivityIndicator
 } from 'react-native';
 
 import MapView, { UrlTile } from "react-native-maps";
@@ -39,10 +40,9 @@ export default class HomeScreen extends React.Component {
         this.onRegionChangeComplete = this.onRegionChangeComplete.bind(this);
         this.openTakePicture = this.openTakePicture.bind(this);
         this.setInitialRegion = this.setInitialRegion.bind(this);
-        this.renderMap = this.renderMap.bind(this);
 
         navigator.geolocation.getCurrentPosition(
-	    this.setInitialRegion,
+            this.setInitialRegion,
             error => {}
         );
 
@@ -77,51 +77,38 @@ export default class HomeScreen extends React.Component {
         navigate('TakePicture');
     }
 
-    renderMap() {
-
-        if (this.state.displayMap === false) {
-            return null;
-        }
-
-        return (
-            <MapView
-                style={styles.map}
-                initialRegion={this.state.initialRegion}
-                onRegionChangeComplete={this.onRegionChangeComplete}
-                showsMyLocationButton={true}
-            >
-            </MapView>
-        );
-    }
-
-    renderPin() {
-
-        if (this.state.displayMap === false) {
-            return null;
-        }
-
-        return (
-            <View
-                pointerEvents="none"
-                style={styles.pinView}
-            >
-              <Image
-                  style={styles.pin}
-                  pointerEvents="none"
-                  source={require('./assets/pin.png')}
-              />
-            </View>
-        );
-    }
-
     render() {
+
+        if (this.state.displayMap === false) {
+
+            return (
+                <View style={styles.horizontal}>
+                    <ActivityIndicator size="large" color="#0000ff" />
+                </View>
+            );
+        }
 
         return (
             <View style={styles.container}>
                 <Text>Initial position: {this.state.initialRegion.latitude}, {this.state.initialRegion.longitude}</Text>
                 <Text>Current position: {this.state.currentRegion.latitude}, {this.state.currentRegion.longitude}</Text>
-                { this.renderMap() }
-                { this.renderPin() }
+                <MapView
+                    style={styles.map}
+                    initialRegion={this.state.initialRegion}
+                    onRegionChangeComplete={this.onRegionChangeComplete}
+                    showsMyLocationButton={true}
+                >
+                </MapView>
+                <View
+                    pointerEvents="none"
+                    style={styles.pinView}
+                >
+                  <Image
+                      style={styles.pin}
+                      pointerEvents="none"
+                      source={require('./assets/pin.png')}
+                  />
+                </View>
                 <Button
                     onPress={this.openTakePicture}
                     title="Take picture"
@@ -159,5 +146,10 @@ const styles = StyleSheet.create({
     pin: {
         width: 50,
         height: 50
+    },
+    horizontal: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        padding: 150
     }
 });
