@@ -83,7 +83,9 @@ export default class TakePictureScreen extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     camera: {
         flex: 1
