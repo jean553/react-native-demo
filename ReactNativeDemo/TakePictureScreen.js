@@ -3,11 +3,14 @@ import React from 'react';
 import {
     View,
     StyleSheet,
-    Text
+    Text,
+    Button,
+    Alert,
+    Image
 } from 'react-native';
 
 import {
-    Camera,
+    ImagePicker,
     Permissions
 } from 'expo';
 
@@ -21,34 +24,58 @@ export default class TakePictureScreen extends React.Component {
         super(props);
 
         this.state = {
-            hasCameraPermission: null,
-            type: Camera.Constants.Type.back,
+            cameraPermission: '',
+            cameraRollPermission: '',
+            photo: null
         };
+
+        this.pickCamera = this.pickCamera.bind(this);
+        this.displayPhoto = this.displayPhoto.bind(this);
     }
 
-    /**
-     * overwrites the React.Component method that waits
-     * for the app to be allowed to access the device
-     */
-    async componentDidMount() {
-        const { status } = await Permissions.askAsync(Permissions.CAMERA);
-        this.setState({ hasCameraPermission: status === 'granted' });
+    async pickCamera() {
+
+        const CAMERA_PERMISSIONS = Permissions.CAMERA;
+        const CAMERA_ROLL_PERMISSIONS = Permissions.CAMERA_ROLL;
+
+        const cameraPermission = await Permissions.askAsync(CAMERA_PERMISSIONS);
+        const cameraRollPermission = await Permissions.askAsync(CAMERA_ROLL_PERMISSIONS);
+
+        this.setState({ cameraPermission: cameraPermission.status });
+        this.setState({ cameraRollPermission: cameraRollPermission.status });
+
+        let photo = await ImagePicker.launchCameraAsync();
+        console.log(photo.uri);
+
+        this.setState({ photo: photo.uri });
+    }
+
+    displayPhoto() {
+
+        if (this.state.photo === null) {
+            return null;
+        }
+
+        return (
+            <View>
+                <Text>Your picture:</Text>
+                <Image
+                  style={styles.image}
+                  source={{ uri: this.state.photo }}
+                />
+            </View>
+        );
     }
 
     render() {
 
-        /* from example: https://docs.expo.io/versions/latest/sdk/camera/ */
-        const { hasCameraPermission } = this.state;
-        if (hasCameraPermission === null) {
-            return <Text>No access to camera</Text>;
-        } else if (hasCameraPermission === false) {
-            return <Text>No permission to access the camera</Text>;
-        }
-
         return (
             <View style={styles.container}>
-                <Camera style={styles.camera} type={this.state.type}>
-                </Camera>
+                <Button
+                  onPress={this.pickCamera}
+                  title="Take photo"
+                />
+                { this.displayPhoto() }
             </View>
         );
     }
@@ -60,5 +87,9 @@ const styles = StyleSheet.create({
     },
     camera: {
         flex: 1
+    },
+    image: {
+        width: 200,
+        height: 400
     }
 });
