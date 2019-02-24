@@ -2,6 +2,8 @@
 
 A simple React Native demonstration project.
 
+![Image 1](screenshots/screenshots.png)
+
 ## Start the project
 
 ```sh
