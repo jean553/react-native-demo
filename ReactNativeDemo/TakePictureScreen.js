@@ -3,7 +3,6 @@ import React from 'react';
 import {
     View,
     StyleSheet,
-    TouchableOpacity,
     Text
 } from 'react-native';
 
@@ -27,35 +26,28 @@ export default class TakePictureScreen extends React.Component {
         };
     }
 
+    /**
+     * overwrites the React.Component method that waits
+     * for the app to be allowed to access the device
+     */
+    async componentDidMount() {
+        const { status } = await Permissions.askAsync(Permissions.CAMERA);
+        this.setState({ hasCameraPermission: status === 'granted' });
+    }
+
     render() {
+
+        /* from example: https://docs.expo.io/versions/latest/sdk/camera/ */
+        const { hasCameraPermission } = this.state;
+        if (hasCameraPermission === null) {
+            return <Text>No access to camera</Text>;
+        } else if (hasCameraPermission === false) {
+            return <Text>No permission to access the camera</Text>;
+        }
+
         return (
             <View style={styles.container}>
-                <Camera style={{ flex: 1 }} type={this.state.type}>
-                    <View
-                        style={{
-                            flex: 1,
-                            backgroundColor: 'transparent',
-                            flexDirection: 'row',
-                        }}>
-                        <TouchableOpacity
-                            style={{
-                                flex: 0.1,
-                                alignSelf: 'flex-end',
-                                alignItems: 'center',
-                            }}
-                            onPress={() => {
-                                this.setState({
-                                    type: this.state.type === Camera.Constants.Type.back
-                                        ? Camera.Constants.Type.front
-                                        : Camera.Constants.Type.back,
-                                });
-                            }}>
-                            <Text
-                                style={{ fontSize: 18, marginBottom: 10, color: 'white' }}>
-                                {' '}Flip{' '}
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
+                <Camera style={styles.camera} type={this.state.type}>
                 </Camera>
             </View>
         );
@@ -64,9 +56,9 @@ export default class TakePictureScreen extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
+        flex: 1
+    },
+    camera: {
+        flex: 1
     }
 });
