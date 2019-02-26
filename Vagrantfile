@@ -24,14 +24,19 @@ Vagrant.configure(2) do |config|
   config.vm.network "forwarded_port", guest: 19001, host: 19001
   config.vm.network "forwarded_port", guest: 19002, host: 19002
 
-  config.vm.provision "set_lan_ip", "type": "shell" do |installs|
+  config.vm.provision "set_lan_ip", "type": "shell", privileged: false do |installs|
     installs.inline = "
       
       cd /vagrant/ReactNativeDemo
       npm install
 
-      echo 'export REACT_NATIVE_PACKAGER_HOSTNAME=#{REACT_NATIVE_PACKAGER_HOSTNAME}' >> /home/vagrant/.zshrc
-      echo 'cd /vagrant' >> /home/vagrant/.zshrc
+      npm install expo
+      npm install --save react-native-navigation
+      npm install --save react-native-maps
+      npm install --save react-native-camera
+      react-native link react-native-camera
+
+      echo 'export REACT_NATIVE_PACKAGER_HOSTNAME=#{REACT_NATIVE_PACKAGER_HOSTNAME} && cd /vagrant/ReactNativeDemo' | sudo tee --append /home/vagrant/.zshrc
     "
   end
 end
