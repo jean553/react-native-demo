@@ -18,6 +18,7 @@ import {
 import LoginScreen from './LoginScreen';
 import HomeScreen from './HomeScreen';
 import TakePictureScreen from './TakePictureScreen';
+import ItemsListScreen from './ItemsListScreen';
 
 const CustomDrawerComponent = (props) => (
     <SafeAreaView>
@@ -45,6 +46,12 @@ export default createDrawerNavigator(
             screen: TakePictureScreen,
             navigationOptions: {
               drawerLabel: 'TakePicture',
+            }
+        },
+        ItemsListScreenItem: {
+            screen: ItemsListScreen,
+            navigationOptions: {
+              drawerLabel: 'List items',
             }
         },
     },
