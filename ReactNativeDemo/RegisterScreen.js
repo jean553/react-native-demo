@@ -91,30 +91,32 @@ export default class RegisterScreen extends React.Component {
                     />
 
                     <Text>Birth year:</Text>
-                    <Picker
-                        selectedValue={this.state.birthYear}
-                        style={styles.picker}
-                        onValueChange={(itemValue, itemIndex) =>
-                            this.setState({birthYear: itemValue})
-                        }
-                    >
-                        <Picker.Item label="2010" value="2010" />
-                        <Picker.Item label="2009" value="2009" />
-                        <Picker.Item label="2008" value="2008" />
-                        <Picker.Item label="2007" value="2007" />
-                    </Picker>
+                    <View style={styles.picker}>
+                        <Picker
+                            selectedValue={this.state.birthYear}
+                            onValueChange={(itemValue, itemIndex) =>
+                                this.setState({birthYear: itemValue})
+                            }
+                        >
+                            <Picker.Item label="2010" value="2010" />
+                            <Picker.Item label="2009" value="2009" />
+                            <Picker.Item label="2008" value="2008" />
+                            <Picker.Item label="2007" value="2007" />
+                        </Picker>
+                    </View>
 
                     <Text>Gender:</Text>
-                    <Picker
-                        selectedValue={this.state.gender}
-                        style={styles.picker}
-                        onValueChange={(itemValue, itemIndex) =>
-                            this.setState({gender: itemValue})
-                        }
-                    >
-                        <Picker.Item label="Man" value="Man" />
-                        <Picker.Item label="Woman" value="Woman" />
-                    </Picker>
+                    <View style={styles.picker}>
+                        <Picker
+                            selectedValue={this.state.gender}
+                            onValueChange={(itemValue, itemIndex) =>
+                                this.setState({gender: itemValue})
+                            }
+                        >
+                            <Picker.Item label="Man" value="Man" />
+                            <Picker.Item label="Woman" value="Woman" />
+                        </Picker>
+                    </View>
 
                     <View style={styles.conditions}>
                         <CheckBox
@@ -162,12 +164,12 @@ const styles = StyleSheet.create({
     },
     button: { margin: 5 },
     picker: {
-        width: '100%',
         borderWidth: 1,
         borderColor: 'black',
         backgroundColor: '#fff',
         height: 50,
-        margin: 10
+        marginLeft: 10,
+        marginRight: 10,
     },
     input: {
         borderLeftWidth: 1,
