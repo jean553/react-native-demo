@@ -6,6 +6,7 @@ import {
     TextInput,
     Button,
     CheckBox,
+    ImageBackground,
     Picker
 } from 'react-native';
 
@@ -44,107 +45,102 @@ export default class RegisterScreen extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <View style={styles.field}>
+                <ImageBackground
+                    source={require('./assets/react.png')}
+                    style={styles.background}
+                >
                     <Text>Firstname:</Text>
                     <TextInput
-                        style={styles.textInput}
+                        style={styles.input}
                         placeholder="Firstname"
                         onChangeText={firstname => this.setState({firstname})}
                     />
-                </View>
 
-                <View style={styles.field}>
-                   <Text>Lastname:</Text>
-                   <TextInput
-                       style={styles.textInput}
-                       placeholder="Lastname"
-                       onChangeText={lastname => this.setState({lastname})}
-                   />
-                </View>
-
-                <View style={styles.field}>
-                   <Text>Email:</Text>
-                   <TextInput
-                       style={styles.textInput}
-                       placeholder="Email"
-                       keyboardType="email-address"
-                       onChangeText={email => this.setState({email})}
-                       autoCapitalize="none"
-                   />
-                </View>
-
-                <View style={styles.field}>
-                   <Text>Password:</Text>
-                   <TextInput
-                       style={styles.textInput}
-                       placeholder="Password"
-                       secureTextEntry={true}
-                       onChangeText={password => this.setState({password})}
-                       autoCapitalize="none"
-                   />
-                </View>
-
-                <View style={styles.field}>
-                   <Text>Confirm password:</Text>
-                   <TextInput
-                       style={styles.textInput}
-                       placeholder="Confirm password"
-                       secureTextEntry={true}
-                       onChangeText={passwordConfirmation => this.setState({passwordConfirmation})}
-                       autoCapitalize="none"
-                   />
-                </View>
-
-                <Text>Birth year:</Text>
-                <Picker
-                    selectedValue={this.state.birthYear}
-                    style={styles.picker}
-                    onValueChange={(itemValue, itemIndex) =>
-                        this.setState({birthYear: itemValue})
-                    }
-                >
-                    <Picker.Item label="2010" value="2010" />
-                    <Picker.Item label="2009" value="2009" />
-                    <Picker.Item label="2008" value="2008" />
-                    <Picker.Item label="2007" value="2007" />
-                </Picker>
-
-                <Text>Gender:</Text>
-                <Picker
-                    selectedValue={this.state.gender}
-                    style={styles.picker}
-                    onValueChange={(itemValue, itemIndex) =>
-                        this.setState({gender: itemValue})
-                    }
-                >
-                    <Picker.Item label="Man" value="Man" />
-                    <Picker.Item label="Woman" value="Woman" />
-                </Picker>
-
-                <View style={styles.conditions}>
-                    <CheckBox
-                        value={this.state.conditionsAccepted}
-                        onValueChange={() => this.setState({ conditionsAccepted: !this.state.conditionsAccepted })}
+                    <Text>Lastname:</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Lastname"
+                        onChangeText={lastname => this.setState({lastname})}
                     />
-                    <Text>I accept conditions</Text>
-                </View>
 
-                <View style={styles.buttonsGroup}>
-                    <View style={styles.button}>
-                        <Button
-                            onPress={this.back}
-                            buttonStyle={styles.button}
-                            title="Back"
+                    <Text>Email:</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Email"
+                        keyboardType="email-address"
+                        onChangeText={email => this.setState({email})}
+                        autoCapitalize="none"
+                    />
+
+                    <Text>Password:</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Password"
+                        secureTextEntry={true}
+                        onChangeText={password => this.setState({password})}
+                        autoCapitalize="none"
+                    />
+
+                    <Text>Confirm password:</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Confirm password"
+                        secureTextEntry={true}
+                        onChangeText={passwordConfirmation => this.setState({passwordConfirmation})}
+                        autoCapitalize="none"
+                    />
+
+                    <Text>Birth year:</Text>
+                    <Picker
+                        selectedValue={this.state.birthYear}
+                        style={styles.picker}
+                        onValueChange={(itemValue, itemIndex) =>
+                            this.setState({birthYear: itemValue})
+                        }
+                    >
+                        <Picker.Item label="2010" value="2010" />
+                        <Picker.Item label="2009" value="2009" />
+                        <Picker.Item label="2008" value="2008" />
+                        <Picker.Item label="2007" value="2007" />
+                    </Picker>
+
+                    <Text>Gender:</Text>
+                    <Picker
+                        selectedValue={this.state.gender}
+                        style={styles.picker}
+                        onValueChange={(itemValue, itemIndex) =>
+                            this.setState({gender: itemValue})
+                        }
+                    >
+                        <Picker.Item label="Man" value="Man" />
+                        <Picker.Item label="Woman" value="Woman" />
+                    </Picker>
+
+                    <View style={styles.conditions}>
+                        <CheckBox
+                            value={this.state.conditionsAccepted}
+                            onValueChange={() => this.setState({ conditionsAccepted: !this.state.conditionsAccepted })}
                         />
+                        <Text>I accept conditions</Text>
                     </View>
-                    <View style={styles.button}>
-                        <Button
-                            onPress={this.register}
-                            buttonStyle={styles.button}
-                            title="Register"
-                        />
+
+                    <View style={styles.buttonsGroup}>
+                        <View style={styles.button}>
+                            <Button
+                                onPress={this.back}
+                                buttonStyle={styles.button}
+                                title="Back"
+                            />
+                        </View>
+                        <View style={styles.button}>
+                            <Button
+                                onPress={this.register}
+                                buttonStyle={styles.button}
+                                title="Register"
+                            />
+                        </View>
                     </View>
-                </View>
+                </ImageBackground>
 
             </View>
         );
@@ -154,12 +150,11 @@ export default class RegisterScreen extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: 20
+        marginTop: 40,
     },
-    field: {
-        alignContent: 'space-between',
-        flexDirection: 'row',
-        margin: 10,
+    background: {
+        width: '100%',
+        height: '100%'
     },
     buttonsGroup: {
         alignContent: 'space-between',
@@ -168,7 +163,21 @@ const styles = StyleSheet.create({
     button: { margin: 5 },
     picker: {
         width: '100%',
-        height: 50
+        borderWidth: 1,
+        borderColor: 'black',
+        backgroundColor: '#fff',
+        height: 50,
+        margin: 10
+    },
+    input: {
+        borderLeftWidth: 1,
+        borderRightWidth: 1,
+        borderTopWidth: 1,
+        borderBottomWidth: 1,
+        marginLeft: 10,
+        marginRight: 10,
+        height: 40,
+        backgroundColor: '#fff'
     },
     conditions: {
         alignContent: 'space-between',
