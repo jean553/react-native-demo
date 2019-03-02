@@ -69,7 +69,8 @@ export default class LoginScreen extends React.Component {
 
     register() {
 
-        /* TODO */
+        const {navigate} = this.props.navigation;
+        navigate('Register');
     }
 
     forgotPassword() {
@@ -87,23 +88,23 @@ export default class LoginScreen extends React.Component {
                     <View style={styles.wrapper}>
                         <Text style={styles.title}>ReactNative Demonstration app</Text>
                         <TextInput
-                          style={styles.textInput}
-                          placeholder="Email"
-                          keyboardType="email-address"
-                          onChangeText={email => this.setState({email})}
-                          autoCapitalize="none"
+                            style={styles.input}
+                            placeholder="Email"
+                            keyboardType="email-address"
+                            onChangeText={email => this.setState({email})}
+                            autoCapitalize="none"
                         />
                         <TextInput
-                          style={styles.textInput}
-                          placeholder="Password"
-                          secureTextEntry={true}
-                          onChangeText={password => this.setState({password})}
-                          autoCapitalize="none"
+                            style={styles.input}
+                            placeholder="Password"
+                            secureTextEntry={true}
+                            onChangeText={password => this.setState({password})}
+                            autoCapitalize="none"
                         />
                         <View style={styles.buttonsGroup}>
                             <View style={styles.button}>
                                 <Button
-                                    onPress={this.login}
+                                    onPress={this.register}
                                     buttonStyle={styles.button}
                                     title="Register"
                                 />
@@ -136,7 +137,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%'
     },
-    textInput: {
+    input: {
         borderLeftWidth: 1,
         borderRightWidth: 1,
         borderTopWidth: 1,
